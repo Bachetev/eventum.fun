@@ -1,62 +1,54 @@
-﻿import { Router } from "express";
+﻿// backend/src/routes/guest.menu.routes.js
+import { Router } from "express";
 import { body } from "express-validator";
-import { requireAuth } from "../middlewares/requireAuth.js";
-import { requireRole } from "../middlewares/requireRole.js";
-import { validate } from "../middlewares/validate.js";
+
+import { requireAuth } from "../middlewares/auth.middleware.js";
+import { requireRole } from "../middlewares/role.middleware.js";
+import { validate } from "../middlewares/inputValidation.js";
 import * as C from "../controllers/guest.menu.controller.js";
-import { aggregateResults } from "../services/votes.service.js";
 
 const r = Router();
 
-// Все эндпоинты ниже только для авторизованных гостей
+// Все эндпоинты ниже — только для авторизованных гостей
 r.use(requireAuth, requireRole("GUEST"));
 
 /* timeline */
 r.get("/event/timeline", C.timeline);
 
-/* activities (placeholder) */
+/* activities (заглушка) */
 r.get("/activities", C.activities);
 
-/* -------------------- VOTES (алиасы путей) -------------------- */
-// Список открытых голосований мероприятия
+/* votes */
+// список открытых голосований (два алиаса — любой можно использовать)
 r.get("/votes", C.listVotes);
-r.get("/activities/votes", C.listVotes); // alias
+r.get("/activities/votes", C.listVotes);
 
-// Проголосовать (body: { option_idx: number | number[] })
-const voteAnswerValidation = validate([
-  body("option_idx").custom((v) => {
-    if (Array.isArray(v)) return v.every((n) => Number.isInteger(n));
+// отдать ответ (single/multiple по настройкам голосования)
+const optionIdxValidator = validate([
+  body("option_idx").custom(v => {
+    if (Array.isArray(v)) return v.every(Number.isInteger);
     return Number.isInteger(v);
   }),
 ]);
-r.post("/votes/:voteId/answer", voteAnswerValidation, C.answerVote);
-r.post("/activities/vote/:voteId", voteAnswerValidation, C.answerVote); // alias
 
-// Результаты голосования
-r.get("/activities/vote/:voteId/results", async (req, res, next) => {
-  try {
-    const { voteId } = req.params;
-    const items = await aggregateResults(voteId);
-    res.json({ items });
-  } catch (e) {
-    next(e);
-  }
-});
+r.post("/votes/:voteId/answer", optionIdxValidator, C.answerVote);
+r.post("/activities/vote/:voteId", optionIdxValidator, C.answerVote); // алиас
 
-/* -------------------- PRIVILEGES -------------------- */
-// Список моих привилегий
+// результаты голосования (алиасы)
+r.get("/votes/:voteId/results", C.voteResults);
+r.get("/activities/vote/:voteId/results", C.voteResults);
+
+/* privileges */
 r.get("/privileges", C.myPrivileges);
-
-// Создать привилегию
-// Разрешаем два варианта:
-//  1) Новый:  { type, payload: {...} }
-//  2) Старый: { type, message?, amount? } — (оставлено для совместимости)
-const privilegeValidation = validate([
-  body("type").isIn(["song", "toast", "custom"]),
-  body("payload").optional().isObject(),
-  body("message").optional().isString(),
-  body("amount").optional().isFloat({ min: 0 }),
-]);
-r.post("/privileges", privilegeValidation, C.createPrivilege);
+r.post(
+  "/privileges",
+  validate([
+    body("type").isIn(["song", "toast", "custom"]),
+    body("message").optional().isString(),        // поддерживаем «старый» вариант
+    body("amount").optional().isFloat({ min: 0 }),
+    body("payload").optional().isObject(),        // и «новый» (payload -> message маппится в контроллере)
+  ]),
+  C.createPrivilege
+);
 
 export default r;
