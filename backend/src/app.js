@@ -32,5 +32,7 @@ app.use("/guest", guestMenuRoutes);
 // ERRORS (в самом конце)
 import { errorHandler } from "./middlewares/error.middleware.js";
 app.use(errorHandler);
+import votesRoutes from "./routes/votes.routes.js";
+app.use("/", votesRoutes);  // базовый префикс, т.к. в файле уже полный путь
 
 export default app;
