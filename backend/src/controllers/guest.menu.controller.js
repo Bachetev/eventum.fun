@@ -1,17 +1,13 @@
 ﻿// backend/src/controllers/guest.menu.controller.js
 import * as S from "../services/guestMenu.service.js";
 
-/** Проверяем, что гость привязан к событию (event_id сидит в JWT после /guest/join) */
 function ensureEventId(req, res) {
   const eventId = req.user?.event_id;
-  if (!eventId) {
-    res.status(400).json({ error: "guest is not linked to an event" });
-    return null;
-  }
+  if (!eventId) { res.status(400).json({ error: "guest is not linked to an event" }); return null; }
   return eventId;
 }
 
-/* ---------- timeline ---------- */
+/* timeline */
 export async function timeline(req, res, next) {
   try {
     const eid = ensureEventId(req, res); if (!eid) return;
@@ -20,7 +16,7 @@ export async function timeline(req, res, next) {
   } catch (e) { next(e); }
 }
 
-/* ---------- activities (placeholder) ---------- */
+/* activities (placeholder) */
 export async function activities(req, res, next) {
   try {
     const eid = ensureEventId(req, res); if (!eid) return;
@@ -29,7 +25,7 @@ export async function activities(req, res, next) {
   } catch (e) { next(e); }
 }
 
-/* ---------- votes ---------- */
+/* votes */
 export async function listVotes(req, res, next) {
   try {
     const eid = ensureEventId(req, res); if (!eid) return;
@@ -43,12 +39,12 @@ export async function answerVote(req, res, next) {
     const eid = ensureEventId(req, res); if (!eid) return;
     const { voteId } = req.params;
     const { option_idx } = req.body; // number | number[]
-    const results = await S.answerVote({ voteId, userId: req.user.id, optionsIdx: option_idx });
-    res.status(201).json({ results });
+    const result = await S.answerVote({ voteId, userId: req.user.id, optionsIdx: option_idx });
+    res.status(201).json({ results: result });
   } catch (e) { next(e); }
 }
 
-/** Результаты опроса без отправки ответа гостем */
+/* NEW: результаты опроса без голосования */
 export async function voteResults(req, res, next) {
   try {
     const eid = ensureEventId(req, res); if (!eid) return;
@@ -58,28 +54,20 @@ export async function voteResults(req, res, next) {
   } catch (e) { next(e); }
 }
 
-/* ---------- privileges ---------- */
-/**
- * Принимаем { type, payload?, amount? } и формируем message:
- * - song:   "Artist — Title"
- * - toast:  payload.message
- * - custom: payload.text
- */
+/* privileges */
 export async function createPrivilege(req, res, next) {
   try {
     const eid = ensureEventId(req, res); if (!eid) return;
 
-    const { type, payload, amount } = req.body || {};
+    // payload -> message
+    const { type, payload, amount } = req.body;
     let message = null;
-
-    if (type === "song") {
-      const artist = payload?.artist?.toString().trim();
-      const title  = payload?.title?.toString().trim();
-      if (artist || title) message = [artist, title].filter(Boolean).join(" — ");
-    } else if (type === "toast") {
-      message = payload?.message?.toString().trim() || null;
-    } else if (type === "custom") {
-      message = payload?.text?.toString().trim() || null;
+    if (type === "song" && payload?.artist && payload?.title) {
+      message = `${payload.artist} — ${payload.title}`;
+    } else if (type === "toast" && typeof payload?.message === "string") {
+      message = payload.message;
+    } else if (type === "custom" && typeof payload?.text === "string") {
+      message = payload.text;
     }
 
     const item = await S.createPrivilege({
@@ -87,7 +75,7 @@ export async function createPrivilege(req, res, next) {
       userId: req.user.id,
       type,
       message,
-      amount: typeof amount === "number" ? amount : null,
+      amount,
     });
 
     res.status(201).json({ item });
