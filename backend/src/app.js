@@ -1,4 +1,4 @@
-﻿import express from "express";
+import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -16,5 +16,13 @@ app.use(cors({ origin: allow.length ? allow : true, credentials: true }));
 
 // Simple health endpoint
 app.get("/health", (_req, res) => res.json({ ok: true }));
+
+import authRoutes from "./routes/auth.routes.js";
+
+app.use("/auth", authRoutes);
+
+import { errorHandler } from "./middlewares/error.js";
+
+app.use(errorHandler);
 
 export default app;
