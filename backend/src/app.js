@@ -28,3 +28,5 @@ app.use(errorHandler);
 export default app;
 import eventsRoutes from "./routes/events.routes.js";
 app.use("/events", eventsRoutes);
+import guestRoutes from "./routes/guest.routes.js";
+app.use("/guest", guestRoutes);
