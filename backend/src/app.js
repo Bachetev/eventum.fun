@@ -1,3 +1,4 @@
+// backend/src/app.js
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -14,19 +15,22 @@ app.use(cookieParser());
 const allow = (process.env.CORS_ORIGIN || "").split(",").filter(Boolean);
 app.use(cors({ origin: allow.length ? allow : true, credentials: true }));
 
-// Simple health endpoint
+// health
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
+// ROUTES
 import authRoutes from "./routes/auth.routes.js";
+import eventsRoutes from "./routes/events.routes.js";
+import guestRoutes from "./routes/guest.routes.js";
+import guestMenuRoutes from "./routes/guest.menu.routes.js";
 
 app.use("/auth", authRoutes);
+app.use("/events", eventsRoutes);
+app.use("/guest", guestRoutes);
+app.use("/guest", guestMenuRoutes);
 
-import { errorHandler } from "./middlewares/error.js";
-
+// ERRORS (в самом конце)
+import { errorHandler } from "./middlewares/error.middleware.js";
 app.use(errorHandler);
 
 export default app;
-import eventsRoutes from "./routes/events.routes.js";
-app.use("/events", eventsRoutes);
-import guestRoutes from "./routes/guest.routes.js";
-app.use("/guest", guestRoutes);
