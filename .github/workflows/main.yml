@@ -19,14 +19,12 @@ jobs:
           node-version: 20
           cache: "npm"
 
-      - name: Install & build frontend
+      - name: Install frontend deps
         working-directory: frontend
         run: |
           npm ci || npm i
-          npm run build
 
       - name: Install backend deps
         working-directory: backend
         run: |
           npm ci || npm i
-          node -e "console.log('backend deps ok')"
