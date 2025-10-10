@@ -26,3 +26,5 @@ import { errorHandler } from "./middlewares/error.js";
 app.use(errorHandler);
 
 export default app;
+import eventsRoutes from "./routes/events.routes.js";
+app.use("/events", eventsRoutes);
