@@ -1,0 +1,27 @@
+﻿# dependencies
+node_modules/
+**/node_modules/
+
+# env
+.env
+**/.env
+.env.local
+**/.env.local
+
+# builds / caches
+dist/
+build/
+coverage/
+.nyc_output/
+.next/
+.out/
+.cache/
+.parcel-cache/
+.vite/
+.turbo/
+tmp/
+*.log
+
+# editor
+.vscode/
+.DS_Store
