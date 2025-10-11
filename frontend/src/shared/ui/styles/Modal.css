@@ -1,0 +1,36 @@
+﻿.mdl__backdrop{
+  position:fixed; inset:0; z-index:30;
+  background: linear-gradient(180deg, rgba(10,8,24,.55), rgba(10,8,24,.85));
+  backdrop-filter: blur(4px);
+  display:flex; align-items:center; justify-content:center;
+}
+.mdl--enter{ animation: mdlFadeIn .24s ease both; }
+.mdl--exiting{ animation: mdlFadeOut .24s ease both; }
+@keyframes mdlFadeIn{ from { opacity:0 } to { opacity:1 } }
+@keyframes mdlFadeOut{ from { opacity:1 } to { opacity:0 } }
+
+.mdl__inner{
+  position:relative;
+  border-radius:18px;
+  background: rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  backdrop-filter: blur(12px);
+  padding: 22px 22px 18px;
+  transform-origin: 50% 48%;
+}
+.mdl__inner--enter{ animation: mdlPopIn .24s cubic-bezier(.18,.72,.25,1.12) both; }
+.mdl__inner--exiting{ animation: mdlPopOut .24s ease both; }
+@keyframes mdlPopIn{ from { transform: translateY(8px) scale(.985); opacity:.6 } to { transform:none; opacity:1 } }
+@keyframes mdlPopOut{ from { transform: none; opacity:1 } to { transform: translateY(8px) scale(.985); opacity:.6 } }
+
+.mdl__close{
+  position:absolute; top:8px; right:8px;
+  width:28px; height:28px; border-radius:8px; cursor:pointer;
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.12);
+  color:inherit; display:flex; align-items:center; justify-content:center;
+  backdrop-filter: blur(10px);
+  transition: transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.mdl__close:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.18); }

@@ -1,0 +1,1 @@
+﻿export const ROLES = { ORGANIZER: "ORGANIZER", GUEST: "GUEST" };

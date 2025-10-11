@@ -1,0 +1,25 @@
+﻿.lang{
+  display:flex; align-items:center; gap:6px;
+  border-radius:12px; border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06); color:inherit; padding:8px 12px; cursor:pointer;
+  backdrop-filter: blur(8px);
+  position:relative; overflow:hidden;
+  transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight:700;
+}
+.lang:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.24); }
+.lang__icon{ display:inline-flex; }
+.lang__text{ display:inline-block; min-width:2.2ch; }
+.lang__swap{ display:inline-block; transition: transform .28s ease, opacity .28s ease; }
+
+/* Перелив на кнопке при переключении */
+.lang--shine::after{
+  content:""; position:absolute; inset:-120% -30%; transform: rotate(20deg);
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.45) 35%, transparent 70%);
+  animation: langShine .6s ease;
+}
+@keyframes langShine{ to { transform: translateX(140%) rotate(20deg); } }
+
+/* На момент смены языка слегка подышим текст */
+.lang-anim .lang .lang__swap{ transform: translateY(-3%); opacity:.85; }

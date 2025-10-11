@@ -1,0 +1,75 @@
+﻿:root {
+  color-scheme: dark;
+  --bg1: #190a59;
+  --bg2: #0c063c;
+  --fg:  #f2f3f8;
+  --line: rgba(255,255,255,.12);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+html, body { overflow: hidden; }
+body, button, input, select, textarea {
+  margin:0; color: var(--fg);
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+body {
+  background:
+    radial-gradient(1200px 600px at 15% 110%, rgba(255,122,0,.18), transparent 60%),
+    radial-gradient(1000px 600px at 85% -10%, rgba(124,58,237,.18), transparent 60%),
+    linear-gradient(140deg, var(--bg1), var(--bg2) 60%);
+  overflow-x: hidden;
+}
+a { color: inherit; }
+
+.app-root { min-height:100%; display:flex; flex-direction:column; position:relative; }
+.bg-waves::before,
+.bg-waves::after {
+  content:""; position:absolute; inset:auto -10vw 0 -10vw; height:32vh; pointer-events:none;
+  background:
+    radial-gradient(60% 120% at 20% 100%, rgba(255,122,0,.25), transparent 60%),
+    radial-gradient(70% 120% at 90% 0%, rgba(124,58,237,.25), transparent 60%);
+  filter: blur(40px);
+  transform: translateY(10px);
+  z-index:0;
+}
+.bg-waves::after {
+  height:40vh; bottom:auto; top:-10vh;
+  background:
+    radial-gradient(70% 120% at 10% 0%, rgba(255,122,0,.20), transparent 60%),
+    radial-gradient(60% 120% at 80% 10%, rgba(124,58,237,.20), transparent 60%);
+  filter: blur(60px);
+}
+
+.app-main { position:relative; z-index:1; flex:1; padding: 18px 16px 24px; }
+
+/* Глобальная плавность при смене языка  теперь охватывает и модалки */
+@keyframes langFade { 
+  0%   { opacity:.6; filter: blur(0.6px); transform: translateZ(0); }
+  100% { opacity:1;  filter: none;        transform: none; }
+}
+.lang-anim .app-main,
+.lang-anim .hdr,
+.lang-anim .mdl__inner,
+.lang-anim .rm__step {
+  animation: langFade 320ms ease both;
+  will-change: opacity, filter, transform;
+  backface-visibility: hidden;
+}
+
+.card {
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+h1,h2,h3 { line-height:1.2; margin:0 0 8px; }
+h1 { font-size: 2rem; font-weight:800; }
+h2 { font-size: 1.6rem; font-weight:700; }
+h3 { font-size: 1.25rem; font-weight:600; }
+p { line-height:1.7; }
+.muted { opacity:.7; }
