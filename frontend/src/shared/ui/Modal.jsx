@@ -9,12 +9,13 @@ export default function Modal({ open, onClose, children, width = 640 }) {
   const [exiting, setExiting] = useState(false);
   const ref = useRef(null);
 
-  // Монтаж/демонтаж с плавным закрытием
+  // Монтируем при open=true
   useEffect(() => {
     if (open) {
       setMounted(true);
       setExiting(false);
     } else if (mounted) {
+      // плавное закрытие
       setExiting(true);
       const t = setTimeout(() => { setMounted(false); setExiting(false); }, EXIT_MS);
       return () => clearTimeout(t);
@@ -29,17 +30,13 @@ export default function Modal({ open, onClose, children, width = 640 }) {
     return () => document.removeEventListener("keydown", onKey);
   }, [mounted]);
 
-  // Класс modal-open на <html> чтобы выключать анимации фона
-  useEffect(() => {
-    if (!mounted) return;
-    const html = document.documentElement;
-    html.classList.add("modal-open");
-    return () => html.classList.remove("modal-open");
-  }, [mounted]);
-
   if (!mounted) return null;
 
-  const handleClose = () => { onClose?.(); };
+  const handleClose = () => {
+    // даём родителю сигнал  он поставит open=false, мы анимируем и размонтируемся
+    onClose?.();
+  };
+
   const onBackdrop = (e) => { if (e.target === e.currentTarget) handleClose(); };
 
   return (

@@ -2,7 +2,7 @@
 
 .rm__title{
   margin: 2px 0 10px;
-  font-size: 1.5rem; font-weight: 800; text-align:center;
+  font-size: 1.5rem; font-weight: 800;
 }
 .rm__title--center{ text-align:center; width:100%; }
 
@@ -23,18 +23,10 @@
   display:flex; flex-direction:column; gap:12px;
 }
 
-.rm__actions{
-  display:flex; gap:10px; justify-content:center; margin-top:6px;
-}
-.rm__actions .gbtn{ min-width:160px; }
+.rm__actions{ display:flex; gap:10px; justify-content:center; margin-top:4px; }
+.rm__actions .gbtn{ min-width:180px; }
 
-/* === Плавные вход/выход шагов === */
-.rm__view{
-  will-change: opacity, transform;
-  transition: opacity .22s ease, transform .22s ease;
-  opacity: 0; transform: translateY(6px);
-  position: relative;
-}
-.rm__view--active{ opacity: 1; transform: none; }
-.rm__view--hidden{ pointer-events:none; position:absolute; inset:0; }
-.rm__view--leave{ opacity: 0 !important; transform: translateY(6px) !important; }
+/* Плавный вход шага */
+.rm__step{ opacity:0; transform: translateY(6px); animation: stepIn .26s ease forwards; }
+.rm__step--enter{ animation-delay: 10ms; }
+@keyframes stepIn{ to { opacity:1; transform:none } }
