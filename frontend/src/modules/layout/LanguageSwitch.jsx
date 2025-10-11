@@ -10,30 +10,30 @@ export default function LanguageSwitch({ icon }) {
 
   const smoothSwitch = useCallback(() => {
     const html = document.documentElement;
-    const body = document.body;
+    const modalOpen = html.classList.contains("modal-open");
 
-    // Включаем плавную анимацию на всём интерфейсе (включая модалки)
-    html.classList.add("lang-anim");
+    // Включаем shine в любом случае
     setAnim(true);
-    // Блокируем клики на короткое время  меньше шанса артефактов
-    body.style.pointerEvents = "none";
 
-    // Даем движку применить стили (layout flush)
-    requestAnimationFrame(() => {
+    // Вешаем корректный класс для плавного текста
+    const cls = modalOpen ? "lang-anim-modal" : "lang-anim";
+    html.classList.add(cls);
+
+    setTimeout(() => {
+      i18n.changeLanguage(next.toLowerCase());
       setTimeout(() => {
-        i18n.changeLanguage(next.toLowerCase());
-        // Держим пост-анимацию и потом чистим классы/разблокируем клики
-        setTimeout(() => {
-          html.classList.remove("lang-anim");
-          setAnim(false);
-          body.style.pointerEvents = "";
-        }, 340);
-      }, 80); // короткий pre-fade перед сменой текста
-    });
+        html.classList.remove(cls);
+        setAnim(false);
+      }, 320);
+    }, 80);
   }, [i18n, next]);
 
   return (
-    <button className={`lang ${anim ? "lang--shine" : ""}`} title={next} onClick={smoothSwitch}>
+    <button
+      className={`lang ${anim ? "lang--shine" : ""}`}
+      title={next}
+      onClick={smoothSwitch}
+    >
       <span className="lang__icon">{icon}</span>
       <span className="lang__text"><span className="lang__swap">{cur}</span></span>
     </button>
