@@ -43,20 +43,17 @@ a { color: inherit; }
 
 .app-main { position:relative; z-index:1; flex:1; padding: 18px 16px 24px; }
 
-/* Глобальная плавность при смене языка  теперь охватывает и модалки */
-@keyframes langFade { 
-  0%   { opacity:.6; filter: blur(0.6px); transform: translateZ(0); }
-  100% { opacity:1;  filter: none;        transform: none; }
-}
-.lang-anim .app-main,
-.lang-anim .hdr,
-.lang-anim .mdl__inner,
-.lang-anim .rm__step {
-  animation: langFade 320ms ease both;
-  will-change: opacity, filter, transform;
-  backface-visibility: hidden;
-}
+/* Плавный текст при смене языка */
+@keyframes langFade { from { opacity:.4; filter: blur(1px)} to { opacity:1; filter:none } }
+.lang-anim .app-main { animation: langFade 300ms ease; }           /* без модалки */
+.lang-anim-modal .mdl__inner { animation: langFade 300ms ease; }   /* с модалкой */
 
+/* Шапка не двигается при открытой модалке */
+.modal-open .hdr .lang { transform: none !important; transition: none !important; }
+.modal-open .hdr .lang:hover { transform: none !important; }
+.modal-open .hdr { transform: none !important; }
+
+/* Карточки */
 .card {
   background: rgba(255,255,255,.06);
   backdrop-filter: blur(14px);
