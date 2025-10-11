@@ -13,7 +13,7 @@
 .lang__text{ display:inline-block; min-width:2.2ch; }
 .lang__swap{ display:inline-block; transition: transform .28s ease, opacity .28s ease; }
 
-/* Перелив на кнопке при переключении */
+/* Shine-оверлей кнопки языка */
 .lang--shine::after{
   content:""; position:absolute; inset:-120% -30%; transform: rotate(20deg);
   background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.45) 35%, transparent 70%);
@@ -21,5 +21,7 @@
 }
 @keyframes langShine{ to { transform: translateX(140%) rotate(20deg); } }
 
-/* На момент смены языка слегка подышим текст */
+/* Плавный сдвиг текста на кнопке при обычном режиме */
 .lang-anim .lang .lang__swap{ transform: translateY(-3%); opacity:.85; }
+/* При модалке кнопка всё равно может сверкнуть, но фон не мигает (управляется в base.css) */
+.lang-anim-modal .lang .lang__swap{ transform: translateY(-3%); opacity:.9; }

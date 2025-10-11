@@ -1,27 +1,6 @@
-﻿# dependencies
-node_modules/
-**/node_modules/
-
-# env
-.env
-**/.env
-.env.local
-**/.env.local
-
-# builds / caches
+﻿node_modules/
 dist/
-build/
-coverage/
-.nyc_output/
-.next/
-.out/
-.cache/
-.parcel-cache/
 .vite/
-.turbo/
-tmp/
+.env
+.env.*
 *.log
-
-# editor
-.vscode/
-.DS_Store
