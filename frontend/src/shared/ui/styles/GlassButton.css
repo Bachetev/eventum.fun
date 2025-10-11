@@ -1,0 +1,21 @@
+﻿.gbtn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:10px 14px; border-radius:12px;
+  background: rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  color:inherit; cursor:pointer; user-select:none;
+  backdrop-filter: blur(10px);
+  transition: transform .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease;
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 600;
+}
+.gbtn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.24); }
+.gbtn:active{ transform: translateY(0); }
+.gbtn--primary{
+  background: linear-gradient(90deg, rgba(255,122,0,.95), rgba(255,154,60,.95));
+  border-color:#ff8a1c; color:#140c2a; font-weight:800;
+  box-shadow: 0 10px 24px rgba(255,122,0,.25);
+}
+.gbtn--ghost{ background: transparent; }
+.gbtn__icon{ display:inline-flex; }
+.gbtn__text{ transform: translateY(.5px); white-space:nowrap; }

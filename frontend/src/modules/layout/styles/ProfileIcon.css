@@ -1,0 +1,21 @@
+﻿.prof{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:36px; height:36px; border-radius:12px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06); color:inherit; cursor:pointer;
+  position:relative;
+}
+.prof--authed:hover .prof__menu{ opacity:1; transform: translateY(6px); pointer-events:auto; }
+.prof__menu{
+  position:absolute; right:0; top:100%;
+  background: rgba(18,18,28,.9); border:1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(10px); border-radius:12px; padding:6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  opacity:0; transform: translateY(10px); pointer-events:none;
+  transition: .15s ease;
+}
+.prof__item{
+  display:block; width:160px; text-align:left; background:transparent; color:inherit;
+  border:0; padding:8px 10px; border-radius:8px; cursor:pointer;
+}
+.prof__item:hover{ background: rgba(255,255,255,.06); }

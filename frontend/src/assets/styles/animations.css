@@ -1,0 +1,2 @@
+﻿@keyframes pulseBorder { 0%{box-shadow:0 0 0 0 rgba(79,70,229,.5);} 100%{box-shadow:0 0 0 12px rgba(79,70,229,0);} }
+.pulse { animation: pulseBorder 1.6s infinite; }

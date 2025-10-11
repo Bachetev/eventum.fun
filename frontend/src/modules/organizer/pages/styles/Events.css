@@ -1,0 +1,7 @@
+﻿.events-page { max-width: 980px; margin: 10px auto; display:flex; flex-direction:column; gap:16px; }
+.create { display:flex; gap:10px; align-items:center; }
+.create input { flex:1; background:#0c0f16; border:1px solid #2a2f3a; border-radius:10px; color:#e8eaf2; padding:10px 12px; }
+.list { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:16px; }
+.badge { display:inline-block; padding:2px 8px; border-radius:999px; background:#2b3140; font-size:.8rem; vertical-align:middle; margin-left:6px; }
+.badge.green { background:#1e3a2f; color:#b7f7d4; }
+.actions { margin-top:10px; display:flex; gap:8px; }

@@ -1,0 +1,4 @@
+﻿.org-dash { max-width: 980px; margin: 10px auto; }
+.org-dash .grid { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:16px; }
+.tile { display:flex; align-items:center; justify-content:space-between; background:#101218; border:1px solid #262a36; padding:18px; border-radius:14px; color:#e8eaf2; text-decoration:none; transition:transform .12s ease, border-color .12s ease; }
+.tile:hover { transform: translateY(-2px); border-color:#3b4352; }

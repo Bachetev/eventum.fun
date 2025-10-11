@@ -1,0 +1,21 @@
+﻿.hdr{
+  position: sticky; top: 14px; z-index: 20;
+  margin: 14px 16px 0; padding: 10px 14px;
+  display:flex; align-items:center; gap:12px; justify-content:space-between;
+  border-radius:22px; /*  скругление со всех сторон */
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border:1px solid rgba(255,255,255,.18); /* граница со всех сторон */
+  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+}
+.enter-fade{ animation: hdrFade .45s ease-out both; }
+@keyframes hdrFade { from { transform: translateY(-10px); opacity:0 } to { transform: translateY(0); opacity:1 } }
+
+.hdr__brand{ font-weight:800; text-decoration:none; letter-spacing:.4px; }
+
+.hdr__right{ display:flex; align-items:center; gap:8px; }
+
+/* старые классы навигации оставляем, но скрываем, чтобы не влияли на вёрстку */
+.hdr__nav, .hdr__link{ display:none !important; }
+
