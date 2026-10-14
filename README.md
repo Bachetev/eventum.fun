@@ -1,6 +1,15 @@
-﻿
+# Eventum.fun
 
-### v0.0.6
-- UI polish (glass header, modal fade in/out, language switch shine, smooth i18n text transitions)
-- Role modal UX (Cancel  back to Who-are-you, step transitions)
+A web application in active development. The current documented version is `v0.0.6`.
 
+## Current highlights
+
+- Refined glass-style header
+- Fade transitions for modals
+- Improved language-switch interaction
+- Smoother internationalized text transitions
+- Updated role-selection modal flow, including returning to the previous step
+
+## Project status
+
+Early-stage project. Installation instructions, screenshots, and a complete technology-stack overview will be added after the application setup and structure are documented.
